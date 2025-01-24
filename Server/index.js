@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const { message } = require("statuses");
 
 const app = express();
 
@@ -22,34 +23,55 @@ app.use(morgan("tiny"));
 const blogschema = mongoose.Schema({
   title: String,
   description: String,
-  image: String,
+  // image: File,
   author: String,
 });
 
 const Blogs = mongoose.model("blogs", blogschema);
 
 // the post request
-app.post(`${api}/blogs`, (req, res) => {
-  const Blog = new Blogs({
-    title: req.body.title,
-    description: req.body.description,
-    image: req.body.image,
-    author: req.body.author,
-  });
+// app.post(`${api}/blogs`, (req, res) => {
+//   const Blog = new Blogs({
+//     title: req.body.title,
+//     description: req.body.description,
+//     author: req.body.author,
+//   });
 
-  Blog.save()
-    .then((createdProduct) => {
-      res.status(201).json(createdProduct);
-    })
-    .catch((error) => {
-      res.status(500).json({
-        error: error,
-        success: false,
-      });
-      console.error(error);
+//   Blog.save()
+//     .then((createdProduct) => {
+//       res.status(201).json(createdProduct);
+//     })
+//     .catch((error) => {
+//       res.status(500).json({
+//         error: error,
+//         success: false,
+//       });
+//       console.error(error);
+//     });
+// });
+app.post(`${api}/blogs`, async (req, res) => {
+  try {
+    const blog = new Blogs({
+      title: req.body.title,
+      description: req.body.description,
+      image: req.body.image,
+      author: req.body.author,
     });
-});
 
+    const createdBlog = await blog.save();
+    res.status(201).json({
+      success: true,
+      message: "Blog created successfully",
+      blog: createdBlog,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to create blog",
+      error: error.message,
+    });
+  }
+});
 // the get request
 app.get(`${api}/blogs`, async (req, res) => {
   const BlogsList = await Blogs.find();

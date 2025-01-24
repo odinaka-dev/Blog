@@ -14,16 +14,21 @@ const EditorForm = () => {
     console.log("Image:", image);
 
     // Create FormData to handle both text and file inputs
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("author", author);
-    formData.append("image", image); // Append the file object
+    // const formData = new FormData();
+    // formData.append("title", title);
+    // formData.append("description", description);
+    // formData.append("author", author);
+    // formData.append("image", image);
+
+    const RequestData = { title, description, image, author };
 
     try {
       const result = await fetch("http://localhost:3000/api/v1/blogs", {
         method: "POST",
-        body: formData, // Use FormData as the request body
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(RequestData), // Use FormData as the request body
       });
 
       if (result.status === 201 || result.ok) {
@@ -47,6 +52,7 @@ const EditorForm = () => {
         <input
           type="text"
           placeholder="Title of the blog"
+          name="title"
           className="text-black border border-gray-500 border-[1px] p-2 rounded-lg mb-4 cursor-pointer"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -55,6 +61,7 @@ const EditorForm = () => {
         {/* Image Input */}
         <input
           type="file"
+          name="image"
           className="text-black border border-gray-500 border-[1px] p-2 rounded-lg mb-4 cursor-pointer"
           onChange={(e) => setImage(e.target.files[0])} // Use e.target.files[0]
         />
@@ -64,6 +71,7 @@ const EditorForm = () => {
           placeholder="Content of the blog"
           className="text-black border border-gray-500 border-[1px] p-2 rounded-lg mb-4 cursor-pointer"
           value={description}
+          name="description"
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
 
@@ -71,6 +79,7 @@ const EditorForm = () => {
         <input
           type="text"
           placeholder="Author's name"
+          name="author"
           className="text-black border border-gray-500 border-[1px] p-2 rounded-lg mb-4 cursor-pointer"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}

@@ -40,26 +40,45 @@ const BannerComponent = () => {
 
 // the main post component - the posts would link to the selective blog post created
 const MainPosts = () => {
+  const dated = new Date();
+  // the months in the year
+  const months = [
+    "january",
+    "febuary",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
+  ];
+  const mainMonths = months[dated.getMonth()];
+  const datedAll = `${mainMonths} ${dated.getDate()}, ${dated.getFullYear()}`;
+  console.log(datedAll);
   const BlogPost = [
     {
       id: 1,
       title: "How to get started in tech in 2025",
       desc: "Are you looking to break into the tech industry in 2025? Whether you're starting from scratch or looking to pivot your career, there has never been a better time to enter the world of technology. In this post, we’ll walk you through the essential steps, from choosing the right skills to learning through hands-on projects and navigating the job market. Get ready to embark on your journey into one of the fastest-growing and most rewarding industries today!",
-      date: "Jan 18th, 2025",
+      date: datedAll,
       Info: "Recently read",
     },
     {
       id: 2,
       title: "How to get started in tech in 2025",
       desc: "Are you looking to break into the tech industry in 2025? Whether you're starting from scratch or looking to pivot your career, there has never been a better time to enter the world of technology. In this post, we’ll walk you through the essential steps, from choosing the right skills to learning through hands-on projects and navigating the job market. Get ready to embark on your journey into one of the fastest-growing and most rewarding industries today!",
-      date: "Jan 18th, 2025",
+      date: datedAll,
       Info: "Recently read",
     },
     {
       id: 3,
       title: "How to get started in tech in 2025",
       desc: "Are you looking to break into the tech industry in 2025? Whether you're starting from scratch or looking to pivot your career, there has never been a better time to enter the world of technology. In this post, we’ll walk you through the essential steps, from choosing the right skills to learning through hands-on projects and navigating the job market. Get ready to embark on your journey into one of the fastest-growing and most rewarding industries today!",
-      date: "Jan 18th, 2025",
+      date: datedAll,
       Info: "Recently read",
     },
     {
@@ -109,7 +128,7 @@ const MainPosts = () => {
               </p>
               <p className="text-[12px] text-[#01473e] font-bold flex flex-row justify-between items-center">
                 <span>{Info}</span>
-                <span>{date}</span>
+                <span className="capitalize">{datedAll}</span>
               </p>
             </div>
           </div>
