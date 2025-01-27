@@ -86,9 +86,33 @@ app.get(`${api}/blogs`, async (req, res) => {
   res.send(BlogsList);
 });
 
-// writing the post request
+// GET request for a specific blog by ID
+app.get(`${api}/blogs/:id`, async (req, res) => {
+  const { id } = req.params; // Capture the id from the URL
 
-// writing the get request
+  try {
+    const blog = await Blogs.findById(id); // Find blog by id
+
+    if (!blog) {
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      blog: blog,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch the blog",
+      error: error.message,
+    });
+  }
+});
 
 // connecting to the mongoDB database using mongoose
 mongoose

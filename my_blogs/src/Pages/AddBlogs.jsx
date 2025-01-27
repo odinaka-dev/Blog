@@ -40,7 +40,23 @@ const EditorForm = () => {
     } catch (error) {
       console.error("Error:", error.message);
     }
+
+    handleReferesh();
   };
+
+  // handle the refresh of the web inputs
+  function handleReferesh() {
+    if (
+      setTitle.length > 0 ||
+      setAuthor.length > 0 ||
+      setDescription.length > 0
+    ) {
+      setTitle("");
+      setAuthor("");
+      setDescription("");
+      setImage("");
+    }
+  }
 
   return (
     <section className="max-w-[50%] mx-auto">
