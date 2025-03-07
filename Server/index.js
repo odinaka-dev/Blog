@@ -23,7 +23,6 @@ app.use(morgan("tiny"));
 const blogschema = mongoose.Schema({
   title: String,
   description: String,
-  // image: File,
   author: String,
 });
 
@@ -129,7 +128,3 @@ app.listen(3000, () => {
   console.log(api);
   console.log("the server is running at http://localhost:3000");
 });
-
-// in nodejs model is the collection of data (also known as collection in monodb)
-// the model will contain the information we need
-// in mongoose we call it schema
